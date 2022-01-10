@@ -1,0 +1,13 @@
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -t filter -A INPUT -p icmp --icmp-type echo-request -m limit --limit 5/minute -j ACCEPT
+iptables -t filter -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
+udo iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 20 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 1024:1030 -j ACCEPT
